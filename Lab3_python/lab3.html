@@ -13094,7 +13094,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Fraction</span><span class="p">:</span>
@@ -13134,7 +13134,7 @@ div#notebook {
         <span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span><span class="o">/=</span><span class="n">n</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="o">/=</span><span class="n">n</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         
     <span class="c1">#__eq__(self, other) - x == y вызывает x.__eq__(y).</span>
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
@@ -13370,7 +13370,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fr1</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
@@ -13450,14 +13450,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">fr1</span><span class="o">+</span><span class="n">fr2</span><span class="p">)</span><span class="o">.</span><span class="n">devision</span><span class="p">()</span>
-<span class="c1">#По какой-то причине print((fr1+fr2).devision()) не работает и выбрасывает NONE</span>
-<span class="c1">#Хотя по сути создается новая сущность, сокращается, а потом просто вызывается перегруженный метод</span>
-<span class="c1">#__str__ </span>
-<span class="c1">#очень странно :\ . Поэтому реализовал print прямо внутри метода</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">fr1</span><span class="o">+</span><span class="n">fr2</span><span class="p">)</span><span class="o">.</span><span class="n">devision</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13493,7 +13489,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Создадим новые сущности для упрощения</span>
@@ -13519,11 +13515,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>3.0/28.0
-3.0/28.0
-True
-7.0/1.0
-5.0/1.0
+<pre>True
 False
 </pre>
 </div>
