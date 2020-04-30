@@ -13094,13 +13094,87 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Fraction</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">numaretor</span><span class="p">,</span><span class="n">denominator</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span> <span class="o">=</span> <span class="n">numaretor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">denominator</span>
+        
+    <span class="c1">#Можно использовать просто класс str, без перезначения стандартного, </span>
+    <span class="c1">#но тогда не получится запринтить без вызова этого метода</span>
+    <span class="c1">#---------------------------------------</span>
+    <span class="c1">#Перегрузка оператора строкового вызова</span>
+    <span class="c1">#__str__(self) - вызывается функциями str, print и format. Возвращает строковое представление объекта.</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span>
+        
+        
+    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+      
+    <span class="c1">#перегрузка арифитического оператора</span>
+    <span class="c1">#__add__(self, other) - сложение. x + y вызывает x.__add__(y).</span>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">sum_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">numaretor</span>
+        <span class="n">sum_den</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="c1">#Создаем отдельную сущность под новые значения</span>
+        <span class="k">return</span> <span class="n">Fraction</span><span class="p">(</span><span class="n">sum_num</span><span class="p">,</span><span class="n">sum_den</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">devision</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="c1">#Цикл проверки на делимость, чтобы найти общий делитель</span>
+        <span class="k">while</span> <span class="n">a</span><span class="o">!=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">b</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">:</span>
+                <span class="n">a</span> <span class="o">%=</span> <span class="n">b</span> <span class="c1">#a mod b</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">b</span> <span class="o">%=</span> <span class="n">a</span> <span class="c1">#b mod a</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span><span class="o">/=</span><span class="n">n</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="o">/=</span><span class="n">n</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        
+    <span class="c1">#__eq__(self, other) - x == y вызывает x.__eq__(y).</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+        <span class="c1">#испотльзуем метод devision для упрощения:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devision</span><span class="p">()</span>
+        <span class="n">other</span><span class="o">.</span><span class="n">devision</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">numaretor</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+    
+    <span class="c1">#__mul__(self, other) - умножение (x * y).</span>
+    <span class="c1">#__sub__(self, other) - вычитание (x - y).</span>
+    
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Fraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span><span class="o">*</span><span class="n">other</span><span class="o">.</span><span class="n">numaretor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="o">*</span><span class="n">other</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+        <span class="c1">#other.numaretor = -(other.numaretor)</span>
+        <span class="c1">#return self + other</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">numaretor</span><span class="p">),</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">+</span> <span class="n">temp</span>
+    
+    <span class="c1">#__lt__(self, other) - x &lt; y вызывает x.__lt__(y).</span>
+    <span class="c1">#__gt__(self, other) - x &gt; y вызывает x.__gt__(y).</span>
+    
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">numaretor</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span><span class="o">&lt;</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">numaretor</span><span class="o">/</span><span class="n">other</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span>
+    
+    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+    <span class="c1">#    return ((self.numaretor/self.denominator)&gt;(other.numaretor/other.denominator))</span>
+         <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">&lt;</span><span class="n">other</span><span class="p">)</span>
+    
+    <span class="c1">#Пропустил элемент /</span>
+    <span class="c1">#__truediv__(self, other) - деление (x / y).</span>
+    
+    <span class="k">def</span> <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">other</span><span class="p">):</span>
+        <span class="c1">#temp = other.numaretor</span>
+        <span class="c1">#other.numaretor = other.denominator</span>
+        <span class="c1">#other.denominator = temp</span>
+        <span class="c1">#return (self*other)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">Fraction</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">numaretor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">*</span><span class="n">temp</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13118,7 +13192,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">fr</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
@@ -13139,10 +13213,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">fr</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">fr</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13159,7 +13233,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;__main__.Fraction object at 0x05FC5718&gt;
+<pre>3/4
 </pre>
 </div>
 </div>
@@ -13178,11 +13252,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Не понял что именно требуется тут.</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fr</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">fr</span><span class="p">)</span> 
+<span class="c1">#Немного не понял зачем тут еще один print?</span>
 </pre></div>
 
     </div>
@@ -13199,7 +13273,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;__main__.Fraction object at 0x05FC5718&gt;
+<pre>3/4
 </pre>
 </div>
 </div>
@@ -13218,15 +13292,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Непонял немного: надо вписать метод внутрь класса сверху, или просто отдельно написать? (выбрал 2-й вариант)</span>
-<span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="n">_class_</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_class_</span><span class="p">))</span>
-
-<span class="n">show</span><span class="p">(</span><span class="n">fr</span><span class="p">)</span>
-<span class="c1">#Опять же не совсем понял задание. </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fr</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13243,7 +13312,7 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;__main__.Fraction object at 0x05FC5718&gt;
+<pre>3/4
 </pre>
 </div>
 </div>
@@ -13262,13 +13331,31 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fr</span><span class="o">.</span><span class="n">numaretor</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fr</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3/4
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13283,13 +13370,33 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fr1</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">fr2</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr1</span><span class="o">+</span><span class="n">fr2</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>30/10
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13304,13 +13411,31 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">fr1</span><span class="o">+</span><span class="n">fr2</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>30/10
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13325,13 +13450,35 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">fr1</span><span class="o">+</span><span class="n">fr2</span><span class="p">)</span><span class="o">.</span><span class="n">devision</span><span class="p">()</span>
+<span class="c1">#По какой-то причине print((fr1+fr2).devision()) не работает и выбрасывает NONE</span>
+<span class="c1">#Хотя по сути создается новая сущность, сокращается, а потом просто вызывается перегруженный метод</span>
+<span class="c1">#__str__ </span>
+<span class="c1">#очень странно :\ . Поэтому реализовал print прямо внутри метода</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3.0/1.0
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13346,13 +13493,42 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Создадим новые сущности для упрощения</span>
+<span class="n">fr1</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">28</span><span class="p">)</span>
+<span class="n">fr2</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">84</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr1</span> <span class="o">==</span> <span class="n">fr2</span><span class="p">)</span>
+<span class="n">fr3</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">21</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">fr4</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr3</span> <span class="o">==</span> <span class="n">fr4</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3.0/28.0
+3.0/28.0
+True
+7.0/1.0
+5.0/1.0
+False
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13367,13 +13543,37 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fr1</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">28</span><span class="p">)</span>
+<span class="n">fr2</span> <span class="o">=</span> <span class="n">Fraction</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr1</span><span class="o">*</span><span class="n">fr2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr1</span><span class="o">/</span><span class="n">fr2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr2</span><span class="o">-</span><span class="n">fr1</span><span class="p">)</span> <span class="c1">#Я тут отнимаю первый от второго(!)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>39/336
+36/364
+328/336
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13388,13 +13588,33 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">fr1</span><span class="o">&lt;</span><span class="n">fr2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fr1</span><span class="o">&gt;</span><span class="n">fr2</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>True
+False
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13420,25 +13640,61 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Buffer</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Небольшой метод для сложения элементов списка</span>
+<span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">List</span><span class="p">):</span>
+    <span class="n">Sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">List</span><span class="p">:</span>
+        <span class="n">Sum</span> <span class="o">=</span> <span class="n">Sum</span> <span class="o">+</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">Sum</span>
+
+<span class="k">class</span> <span class="nc">Buffer</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># конструктор без аргументов</span>
-        <span class="k">pass</span>
+        <span class="c1">#создадим отдельный список для хранения элементов и работы с ними:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_list</span> <span class="o">=</span> <span class="p">[]</span>
     
     <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">a</span><span class="p">):</span>
-        <span class="c1"># добавить следующую часть последовательности</span>
-        <span class="k">pass</span>
+        <span class="c1">#метод extend добавит элементы из a в наш список</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="c1">#if len(self.current_list) &gt;= 5</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_list</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_list</span><span class="p">[:</span><span class="mi">5</span><span class="p">]))</span>
+            <span class="c1">#После сложения первых 5 элементов, надо их удалить.</span>
+            <span class="c1">#Просто пирсвоим наш лист, ему же без первых 5 элементов:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_list</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
 
     <span class="k">def</span> <span class="nf">get_current_part</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># вернуть сохраненные в текущий момент элементы последовательности в порядке, в котором они были</span>
-        <span class="c1"># добавлены</span>
-        <span class="k">pass</span>
+        <span class="c1">#Вернем список элементов, которые хранятся в сущности</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_list</span>
+    
+<span class="c1">#Пример работы кода:</span>
+<span class="n">bf</span> <span class="o">=</span> <span class="n">Buffer</span><span class="p">()</span>
+<span class="n">bf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bf</span><span class="o">.</span><span class="n">get_current_part</span><span class="p">())</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>18
+[4, 8]
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13454,14 +13710,161 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Животное</span><span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#А разве можно классы называть на русском? :\</span>
+<span class="c1">#Ну в начале создаем общий класс для всех: Животное. Что у всех животное общее? Возраст и латинское название:</span>
+<span class="k">class</span> <span class="nc">Животное</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">имя</span><span class="p">,</span><span class="n">возраст</span><span class="p">,</span><span class="n">латинское_имя</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">имя</span> <span class="o">=</span> <span class="n">имя</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">возраст</span> <span class="o">=</span> <span class="n">возраст</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">латинское_имя</span> <span class="o">=</span> <span class="n">латинское_имя</span> 
+        <span class="c1">#Здесь мы просто при создании сущности указываем ей имя, возраст, латинское_имя. Привязываем к ней.</span>
+    <span class="c1">#Любое животное моежет как есть,</span>
+    <span class="c1">#родить(кладка яиц так же входит в это понятие)</span>
+    <span class="c1">#Поэтому создаем специальные методы для всех действий:</span>
+    <span class="k">def</span> <span class="nf">Есть</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span><span class="s2">&quot; ест&quot;</span><span class="p">)</span>
+
+    
+    <span class="k">def</span> <span class="nf">Родить</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span> <span class="s2">&quot; родила!&quot;</span><span class="p">)</span>
+   
+        
+<span class="c1">#Животные бывают размуные и нет, так довайте это укажем:</span>
+<span class="k">class</span> <span class="nc">Разумное</span><span class="p">(</span><span class="n">Животное</span><span class="p">):</span>
+    <span class="c1">#А любое разумное животное может думать:</span>
+    <span class="k">def</span> <span class="nf">Подумать</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span> <span class="s2">&quot; много думает!&quot;</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">Взять</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span><span class="s2">&quot; берет что-то&quot;</span><span class="p">)</span>
+    <span class="c1">#Здесь мы создали новый класс Разумное, которое наследует все (и конструктор тоже) от класса Животное</span>
+    <span class="c1">#а так же дополняется 2 возмодность: думать, манипулировать объектами</span>
+    
+<span class="c1">#Животные могут иметь лапы, а могут летать, укажим и это:</span>
+<span class="c1">#Животные с лапами в большинстве своем разумные(не могу вспомнить других), поэтому наследуем от Разумного:</span>
+<span class="k">class</span> <span class="nc">Имеет_Лапы</span><span class="p">(</span><span class="n">Разумное</span><span class="p">):</span>
+    <span class="c1">#Мы указали что любое животное может взаимодействовать с объектами, поэтому дополнить тут нечего</span>
+    <span class="c1">#Создам свой метод - бегать:</span>
+    <span class="k">def</span> <span class="nf">Бегает</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Лови &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span> <span class="s2">&quot; убегает!&quot;</span><span class="p">)</span>
+    
+<span class="c1">#Летающие животные так же имею лапы(те же птицы), так что наследуем от лап:</span>
+<span class="k">class</span> <span class="nc">Летающее</span><span class="p">(</span><span class="n">Имеет_Лапы</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">Взлететь</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span> <span class="s2">&quot; летит!&quot;</span><span class="p">)</span>
+    <span class="c1">#Думаю пояснения тут не нужны, все как и в прошлых</span>
+    
+<span class="c1">#Далее идут конкретные объекты Собака, щенок, самолет, компьютер, орел, белка летяга, человек, медуза, одуванчик</span>
+<span class="c1">#Дополнительные действия полаять, сложить 2 числа, ужалить, пустить корни</span>
+<span class="c1">#Написал больше для себя :з</span>
+
+<span class="k">class</span> <span class="nc">Собака</span><span class="p">(</span><span class="n">Имеет_Лапы</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">Полаять</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span> <span class="s2">&quot; лаит!&quot;</span><span class="p">)</span>
+    <span class="c1">#Собака это разумное животное с лапами, соответственно от Имеет_Лапы и наследуем</span>
+
+<span class="k">class</span> <span class="nc">Щенок</span><span class="p">(</span><span class="n">Собака</span><span class="p">):</span>
     <span class="k">pass</span>
+    <span class="c1">#Щенок это та же собака, так что не вижу разницы :\ . Наследуем от Собаки</span>
+
+<span class="c1">#Не вижу смысла в дальнейшем коментировании, только покажу момент с конструктором. Допустим у орла есть еще Кличка, то:</span>
+<span class="k">class</span> <span class="nc">Орел</span><span class="p">(</span><span class="n">Летающее</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">имя</span><span class="p">,</span><span class="n">возраст</span><span class="p">,</span><span class="n">латинское_имя</span><span class="p">,</span> <span class="n">кличка</span><span class="p">):</span>
+        <span class="n">Животное</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">имя</span><span class="p">,</span><span class="n">возраст</span><span class="p">,</span><span class="n">латинское_имя</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">кличка</span> <span class="o">=</span> <span class="n">кличка</span>
+    <span class="c1">#Орел уже наследует все действия из прошлых классов, так что не вижу смысла в дополнении</span>
+    
+<span class="k">class</span> <span class="nc">Белка_Летяга</span><span class="p">(</span><span class="n">Летающее</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c1">#Медуза не разумное, значит наследуем просто от Животное:</span>
+<span class="k">class</span> <span class="nc">Медуза</span><span class="p">(</span><span class="n">Животное</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">Ужалить</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="s2">&quot; готова ужалить! Аккуратнее!&quot;</span><span class="p">)</span>
+    
+<span class="k">class</span> <span class="nc">Человек</span><span class="p">(</span><span class="n">Разумное</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">имя</span><span class="p">,</span><span class="n">возраст</span><span class="p">,</span><span class="n">латинское_имя</span><span class="p">,</span><span class="n">фамилия</span><span class="p">):</span>
+        <span class="n">Животное</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">имя</span><span class="p">,</span><span class="n">возраст</span><span class="p">,</span><span class="n">латинское_имя</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">фамилия</span> <span class="o">=</span> <span class="n">фамилия</span>
+        
+    <span class="k">def</span> <span class="nf">Сложить_2_Числа</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">число1</span><span class="p">,</span><span class="n">число2</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">имя</span><span class="p">,</span> <span class="s2">&quot; подумал и смог сложить &quot;</span><span class="p">,</span><span class="n">число1</span><span class="p">,</span><span class="s2">&quot; и &quot;</span><span class="p">,</span><span class="n">число2</span><span class="p">,</span><span class="s2">&quot;. Получилось: &quot;</span><span class="p">,</span> <span class="n">число1</span><span class="o">+</span><span class="n">число2</span><span class="p">)</span>
+        
+    <span class="c1">#Одуванчик не является животным, это растение, так что нету никакого наследования. Конструктор у него свой.</span>
+<span class="k">class</span> <span class="nc">Одуванчик</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">название</span><span class="p">,</span><span class="n">возраст</span><span class="p">,</span><span class="n">латинское_название</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">название</span> <span class="o">=</span> <span class="n">название</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">возраст</span> <span class="o">=</span> <span class="n">возраст</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">латинское_название</span> <span class="o">=</span> <span class="n">латинское_название</span> 
+        
+    <span class="c1">#Ну и свой метод:</span>
+    <span class="k">def</span> <span class="nf">Пустить_Корни</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">название</span><span class="p">,</span> <span class="s2">&quot; пустил корни&quot;</span><span class="p">)</span>
+
+<span class="c1">#Самолет может взлететь, но так как взлететь присвоенно Животным, а самолет не живое, то:</span>
+<span class="k">class</span> <span class="nc">Самолет</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">название</span><span class="p">,</span> <span class="n">возраст</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">название</span> <span class="o">=</span> <span class="n">название</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">возраст</span> <span class="o">=</span> <span class="n">возраст</span>
+        <span class="c1">#Возраст самолета, почему бы и нет? :D</span>
+        
+    <span class="k">def</span> <span class="nf">Взлететь</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">название</span><span class="p">,</span><span class="s2">&quot; взлетел!&quot;</span><span class="p">)</span>
+
+<span class="c1">#Так же и компьютер</span>
+<span class="k">class</span> <span class="nc">Компьютер</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">модель</span><span class="p">):</span>
+        <span class="c1">#Я просто не знал что такого присвоить. Пусть будет модель.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">модель</span> <span class="o">=</span> <span class="n">модель</span>
+    
+    <span class="k">def</span> <span class="nf">Сложить_2_Числа</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">число1</span><span class="p">,</span><span class="n">число2</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">модель</span><span class="p">,</span> <span class="s2">&quot; посчитал и сложил &quot;</span><span class="p">,</span><span class="n">число1</span><span class="p">,</span><span class="s2">&quot; и &quot;</span><span class="p">,</span><span class="n">число2</span><span class="p">,</span><span class="s2">&quot;. Получилось: &quot;</span><span class="p">,</span> <span class="n">число1</span><span class="o">+</span><span class="n">число2</span><span class="p">)</span>
+    
+    
+    
+<span class="c1">#Вроде как использовал обсалютно все что указывалось</span>
+<span class="c1">#Вывод могу сделать следующий: </span>
+<span class="c1">#Наследование классов очень похоже на биологическое дерево с его классами и подкласами. </span>
+<span class="c1">#У меня все :з</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cl</span> <span class="o">=</span> <span class="n">Компьютер</span><span class="p">(</span><span class="s2">&quot;RK-3000&quot;</span><span class="p">)</span>
+<span class="n">cl</span><span class="o">.</span><span class="n">Сложить_2_Числа</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1">#Маленький примерчик</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>RK-3000  посчитал и сложил  3  и  5 . Получилось:  8
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
